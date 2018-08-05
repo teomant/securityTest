@@ -35,8 +35,20 @@ public class MyController {
 
     @GetMapping("/")
     public String index(Model model, Principal principal) {
+        if (principal==null){
+            return "redirect: /login";
+        }
         model.addAttribute("message", "You are logged in as " + principal.getName());
         return "index";
+    }
+
+    @GetMapping("/admin/page")
+    public String adminPage(Model model, Principal principal) {
+        return "adminPage";
+    }
+    @GetMapping("/user/page")
+    public String userPage(Model model, Principal principal) {
+        return "userPage";
     }
 
     @GetMapping("/login")
