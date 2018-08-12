@@ -1,5 +1,7 @@
 package org.teomant.securityTest.service;
 
-public interface AuthoritiesService {
+import org.teomant.securityTest.entity.AuthoritiesEntity;
 
+public interface AuthoritiesService {
+    AuthoritiesEntity save(AuthoritiesEntity authoritiesEntity);
 }

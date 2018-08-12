@@ -1,5 +1,6 @@
 package org.teomant.securityTest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "user_id")
 @Entity
 @Table(name = "authorities")
 public class AuthoritiesEntity {
@@ -22,6 +23,7 @@ public class AuthoritiesEntity {
     @Column(name = "authority")
     private String authority;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user_id;

@@ -30,4 +30,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity findUserByUsername(String username) {
         return userRepository.getUserByUsername(username);
     }
+
+    @Override
+    public UserEntity save(UserEntity userEntity) {
+        Long id = userRepository.saveAndFlush(userEntity).getId();
+        UserEntity user = userRepository.getOne(id);
+        return user;
+    }
 }

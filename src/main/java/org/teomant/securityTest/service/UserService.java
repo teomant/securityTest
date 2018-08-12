@@ -11,5 +11,6 @@ public interface UserService {
     Optional<UserEntity> getUserById(Long id);
     List<AuthoritiesEntity> getAutoritiesByUserId(Long id);
     UserEntity findUserByUsername(String username);
+    UserEntity save(UserEntity userEntity);
 
 }
