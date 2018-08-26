@@ -22,8 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    DataSource dataSource;
+//    @Autowired
+//    DataSource dataSource;
 
     //BAP
     @Autowired
@@ -45,43 +45,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
     //Авторизация через страницу логина и перемещение по страницам
-        http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
-                .and()
-                .authorizeRequests().antMatchers("/").authenticated()
-                .and()
-                .authorizeRequests().antMatchers("/login**").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/registration").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .and()
-                .authorizeRequests().antMatchers("/user/**").hasAuthority("ROLE_USER")
-                .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll()
-                .and()
-                .logout().logoutSuccessUrl("/login").permitAll()
-                .and()
-                .rememberMe().rememberMeParameter("remember-me")
-                .tokenRepository(persistentTokenRepository()).tokenValiditySeconds(38400)
-                .and()
-                .csrf().disable();
+//        http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
+//                .and()
+//                .authorizeRequests().antMatchers("/").authenticated()
+//                .and()
+//                .authorizeRequests().antMatchers("/login**").permitAll()
+//                .and()
+//                .authorizeRequests().antMatchers("/registration").permitAll()
+//                .and()
+//                .authorizeRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+//                .and()
+//                .authorizeRequests().antMatchers("/user/**").hasAuthority("ROLE_USER")
+//                .and()
+//                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll()
+//                .and()
+//                .logout().logoutSuccessUrl("/login").permitAll()
+//                .and()
+//                .rememberMe().rememberMeParameter("remember-me")
+//                .tokenRepository(persistentTokenRepository()).tokenValiditySeconds(38400)
+//                .and()
+//                .csrf().disable();
 
         //Авторизация с помощью AuthenticationEntryPoint, наследника BasicAuthenticationEntryPoint
-//        http.csrf().disable();
-//
-//        http.authorizeRequests().anyRequest().authenticated();
-//
-//
-//        http.httpBasic().authenticationEntryPoint(authEntryPoint);
+        http.csrf().disable();
+
+        http.authorizeRequests().anyRequest().authenticated();
+
+        http.httpBasic().authenticationEntryPoint(authEntryPoint);
     }
 
     //для страницы логина/пароля
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
-        repo.setDataSource(dataSource);
-        return repo;
-    }
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+//        repo.setDataSource(dataSource);
+//        return repo;
+//    }
 
 
 }

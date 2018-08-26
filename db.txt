@@ -1,0 +1,68 @@
+-- Table: public.authorities
+
+-- DROP TABLE public.authorities;
+
+CREATE TABLE public.authorities
+(
+  authority text NOT NULL,
+  id integer NOT NULL DEFAULT nextval('authorities_id_seq'::regclass),
+  user_id integer NOT NULL,
+  authorities bigint,
+  user_entity_id bigint,
+  CONSTRAINT authorities_pkey PRIMARY KEY (id),
+  CONSTRAINT authorities_user_id_fkey FOREIGN KEY (user_id)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk269gk2n2bh5hpugl4vctik0v1 FOREIGN KEY (user_entity_id)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk41h57m69d8dc66i8ig0olpwkm FOREIGN KEY (authorities)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.authorities
+  OWNER TO postgres;
+
+
+---------------------------------------
+
+-- Table: public.persistent_logins
+
+-- DROP TABLE public.persistent_logins;
+
+CREATE TABLE public.persistent_logins
+(
+  username character varying(64) NOT NULL,
+  series character varying(64) NOT NULL,
+  token character varying(64) NOT NULL,
+  last_used timestamp without time zone NOT NULL,
+  CONSTRAINT persistent_logins_pkey PRIMARY KEY (series)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.persistent_logins
+  OWNER TO postgres;
+
+--------------------------------------
+
+-- Table: public.users
+
+-- DROP TABLE public.users;
+
+CREATE TABLE public.users
+(
+  id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+  username text NOT NULL,
+  password text NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_username_key UNIQUE (username)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.users
+  OWNER TO postgres;
